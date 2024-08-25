@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
+@Table(name="eventTbl")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,20 +45,14 @@ public class Event {
     
     private Integer seatCapacity; 
     private Integer availableSeats;
+    private String category;
     
-	@ManyToOne
-    @JoinColumn(name = "venue_id") 
-    private Venue1 venue; 
 
-
-	public Event() {
-		super();
-		}
 
 
 	public Event(Long id, @NotNull String name, @NotNull LocalDate date, @NotNull LocalTime time, String description,
 			@NotNull String organization, Double ticketPrice, @NotNull String venueName, @NotNull String venueLocation,
-			Integer seatCapacity, Integer availableSeats, Venue1 venue) {
+			Integer seatCapacity, Integer availableSeats, String category, Venue1 venue) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -69,6 +65,7 @@ public class Event {
 		this.venueLocation = venueLocation;
 		this.seatCapacity = seatCapacity;
 		this.availableSeats = availableSeats;
+		this.category = category;
 		this.venue = venue;
 	}
 
@@ -183,6 +180,16 @@ public class Event {
 	}
 
 
+	public String getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
 	public Venue1 getVenue() {
 		return venue;
 	}
@@ -191,6 +198,17 @@ public class Event {
 	public void setVenue(Venue1 venue) {
 		this.venue = venue;
 	}
-    
+
+
+	@ManyToOne
+    @JoinColumn(name = "venue_id") 
+    private Venue1 venue; 
+
+
+	public Event() {
+		super();
+		}
+
+
 
 }
